@@ -1,0 +1,85 @@
+*.py[cod]
+*.bak
+
+# C extensions
+*.so
+
+# Packages
+*.env
+py36env
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib64
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+.testrepository
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# Complexity
+output/*.html
+output/*/index.html
+
+# Sphinx
+doc/build
+
+# pbr generates these
+AUTHORS
+
+# Editors
+*~
+.*.swp
+
+*.ini
+*.html
+
+node_modules/
+.idea/
+
+*.db
+db*
+output/*
+
+*.pyc
+.idea/*
+.idea*
+\.idea*
+
+# files in this project
+.DS_Store
+*.log
+*.log.*
+*.ipynb
+*.env
+*env
+*.rar
+*.tar
+scripts # local scripts
+local*
+abandoned
+*.sh
+
+# datas
+*.csv
+*.gz
