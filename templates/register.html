@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户注册</title>
+    <style>/* 此处省略层叠样式表选择器 */</style>
+</head>
+<body>
+    <h1> user register </h1>
+    <hr>
+    <p class="hint">{{ hint }}</p>
+    <form action="/vote/register/" method="post">
+        {% csrf_token %}
+        <div class="input">
+            <label for="username"> user name </label>
+            <input type="text" id="username" name="username">
+        </div>
+        <div class="input">
+            <label for="password"> password </label>
+            <input type="password" id="password" name="password">
+        </div>
+        <div class="input">
+            <label for="repassword"> repassword </label>
+            <input type="password" id="repassword" name="repassword">
+        </div>
+        <div class="input">
+            <input type="submit" value="submit">
+            <input type="reset" value="reset">
+        </div>
+    </form>
+    <a href="/vote/login/">login</a>
+</body>
+</html>

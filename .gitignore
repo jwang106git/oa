@@ -52,7 +52,7 @@ AUTHORS
 .*.swp
 
 *.ini
-*.html
+.html
 
 node_modules/
 .idea/
