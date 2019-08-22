@@ -32,3 +32,16 @@ class Teacher(models.Model):
         db_table = 'tb_teacher'
         verbose_name = '老师'
         verbose_name_plural = '老师'
+
+
+class User(models.Model):
+    """ 用户 """
+    no = models.AutoField(primary_key=True, verbose_name='user_num')
+    username = models.CharField(max_length=20, unique=True, verbose_name='user name')
+    password = models.CharField(max_length=32, verbose_name='password')
+    reg_date = models.DateTimeField(auto_now_add=True, verbose_name='register time')
+
+    class Meta:
+        db_table = 'tb_user'
+        verbose_name = 'user'
+        verbose_name_plural = '用户'

@@ -1,11 +1,12 @@
 from django.contrib import admin
 
-from vote.models import Subject, Teacher
+from .models import Subject, Teacher, User
+from .forms import UserForm
 
 
 class SubjectAdmin(admin.ModelAdmin):
     list_display = ('no', 'name', 'create_date', 'is_hot')
-    ordering = ('no', )
+    ordering = ('no',)
 
 
 class TeacherAdmin(admin.ModelAdmin):
@@ -13,5 +14,13 @@ class TeacherAdmin(admin.ModelAdmin):
     ordering = ('subject', 'no')
 
 
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('no', 'username', 'password')
+    ordering = ('no',)
+    form = UserForm
+    list_per_page = 10
+
+
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Teacher, TeacherAdmin)
+admin.site.register(User, UserAdmin)

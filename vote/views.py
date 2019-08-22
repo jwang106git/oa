@@ -1,6 +1,13 @@
+import random
+
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
-from vote.models import Subject, Teacher
+from django.http import JsonResponse, HttpResponse
+
+from .models import Subject, Teacher, User
+from .forms import RegisterForm, LoginForm
+from util.captcha import Captcha
+
+ALL_CHARS = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 
 def show_subjects(request):
@@ -38,3 +45,57 @@ def praise_or_criticize(request):
     except (KeyError, ValueError, Teacher.DoseNotExist):
         data = {'code': 404, 'hint': 'success'}
     return JsonResponse(data)
+
+
+def register(request):
+    page, hint = 'register.html', ''
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            page = 'login.html'
+            hint = '注册成功，请登录'
+        else:
+            hint = '请输入有效的注册信息'
+    return render(request, page, {'hint': hint})
+
+
+def get_captcha_text(length=4):
+    selected_chars = random.choices(ALL_CHARS, k=length)
+    return ''.join(selected_chars)
+
+
+def get_captcha(request):
+    """获得验证码"""
+
+    captcha_text = get_captcha_text()
+    print(type(request.session))
+    request.session['captcha'] = captcha_text
+    image = Captcha.instance().generate(captcha_text)
+    return HttpResponse(image, content_type='image/png')
+
+
+def login(request):
+    hint = ''
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            # 对验证码的正确性进行验证
+            captcha_from_user = form.cleaned_data['captcha']
+            captcha_from_sess = request.session.get('captcha', '')
+            if captcha_from_sess.lower() != captcha_from_user.lower():
+                hint = '请输入正确的验证码'
+            else:
+                username = form.cleaned_data['username']
+                password = form.cleaned_data['password']
+                user = User.objects.filter(username=username, password=password).first()
+                if user:
+                    # 登录成功后将用户编号和用户名保存在session中
+                    request.session['userid'] = user.no
+                    request.session['username'] = user.username
+                    return redirect('/')
+                else:
+                    hint = '用户名或密码错误'
+        else:
+            hint = '请输入有效的登录信息'
+    return render(request, 'login.html', {'hint': hint})

@@ -9,4 +9,8 @@ urlpatterns = [
     path('praise/', views.praise_or_criticize),
     path('criticize/', views.praise_or_criticize),
     path('admin/', admin.site.urls),
+    path('register/', views.register, name='register'),
+    path('captcha/', views.get_captcha),
+    path('login/', views.login),
 ]
+
