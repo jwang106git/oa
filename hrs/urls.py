@@ -5,5 +5,5 @@ from hrs import views
 urlpatterns = [
    # path('', views.index, name='index'),
    # path('', views.index2, name='index2'),
-   path('', views.index2, name='index3'),
+   path('', views.index3, name='index'),
 ]
